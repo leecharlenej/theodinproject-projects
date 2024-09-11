@@ -1,0 +1,21 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    display: grid;
+    justify-content: center;
+}
+
+.app {
+    margin-top: 10%;
+    padding: 20px;
+    width: 20vw;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: auto;
+}
+
+.header, .location-input, .location-results{
+    justify-self: center;
+    margin-bottom: 10px;
+}
