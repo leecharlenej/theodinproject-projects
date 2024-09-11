@@ -7,20 +7,36 @@ async function fetchLocationData (locationName) {
     return locationData;
 }
 
-function getLocationTemp (locationData) {
-    const tempInF = locationData.currentConditions.temp;
-    const tempInC = changeTempToC(tempInF);
-    return tempInC;
+function getLocationDetails (locationData) {
+    
+    const dateDetails = locationData.currentConditions.datetime;
+    console.log(dateDetails);
+
+    const temperature = locationData.currentConditions.temp;
+    const temperatureFeelsLike = locationData.currentConditions.feelslike;
+    console.log(temperature, temperatureFeelsLike);
+
+    const conditionsDetails = locationData.currentConditions.conditions;
+    console.log(conditionsDetails);
+
+    const humidityDetails = locationData.currentConditions.humidity;
+    console.log(humidityDetails);
+
+    const locationObject ={
+        "date": dateDetails,
+        "temperature": temperature,
+        "temperatureFeelsLike": temperatureFeelsLike,
+        "conditionDetails": conditionsDetails,
+        "humidityDetails": humidityDetails
+    }
+    
+    return locationObject;
 }
+
 
 function changeTempToC (temperature) {
     const tempCelsius = (temperature-32) * 5/9
     return tempCelsius.toFixed(2);
-}
-
-function getLocationConditions (locationData) {
-    const tempConditions = locationData.currentConditions.conditions;
-    return tempConditions;
 }
 
 function getLocationInput() {
@@ -30,22 +46,25 @@ function getLocationInput() {
     return locationInputValue;
 }
 
-async function displayLocationData () {
-    let locationDisplayInput = document.querySelector("#locationDisplayInput");
+async function main() {
+    let locationDisplayInput = document.querySelector("#locationDisplayInput h2");
+    let locationDisplayDate = document.querySelector("#locationDisplayDate");
     const locationDisplayTemp = document.querySelector("#locationDisplayTemp");
+    const locationDisplayFeelsLike = document.querySelector("#locationDisplayFeelsLike");
     const locationDisplayConditions = document.querySelector("#locationDisplayConditions");
+    const locationDisplayHumidity = document.querySelector("#locationDisplayHumidity");
 
     try {
         const locationInput = getLocationInput();
         const locationData = await fetchLocationData(locationInput);
-        const locationTemp = getLocationTemp(locationData);
-        const locationConditions = getLocationConditions(locationData);
-        console.log (locationTemp);
-
+        const locationObject = getLocationDetails(locationData);
         
         locationDisplayInput.textContent = locationInput;
-        locationDisplayTemp.textContent = locationTemp;
-        locationDisplayConditions.textContent = locationConditions;
+        locationDisplayDate.textContent = locationObject.date;
+        locationDisplayTemp.textContent = locationObject.temperature;
+        locationDisplayFeelsLike.textContent = locationObject.temperatureFeelsLike;
+        locationDisplayConditions.textContent = locationObject.conditionDetails;
+        locationDisplayHumidity.textContent = locationObject.humidityDetails;
         
     }catch (error) {
         console.error(`'Error fetching location data: ' ${error}`);
@@ -55,5 +74,5 @@ async function displayLocationData () {
     }
 }
 
-const searchButton = document.querySelector('#search-button')
-searchButton.addEventListener("click", displayLocationData)
+const searchButton = document.querySelector('#search-button');
+searchButton.addEventListener("click", main);
