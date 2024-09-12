@@ -76,7 +76,7 @@ searchButton.addEventListener("click", main);
 
 let tempFahrenheitFlag = true;
 
-function toggleTemp (temperature) {
+function toggleTemp (temperature, type) {
 
     let temperatureObject = {
         "temperature": 0,
@@ -87,23 +87,31 @@ function toggleTemp (temperature) {
         const tempCelsius = (temperature-32) * 5/9;
         temperatureObject.temperature = tempCelsius.toFixed(1);
         temperatureObject.buttonMessage = 'Change to Fahrenheit';
-        tempFahrenheitFlag = false;
+        if(type==='temp') {
+            tempFahrenheitFlag = false;
+        };
+        
 
     } else {
         const tempFahrenheit = (temperature * 9/5) + 32;
         temperatureObject.temperature = tempFahrenheit.toFixed(1);
         temperatureObject.buttonMessage = 'Change to Celsius';
-        tempFahrenheitFlag = true;
+        if(type==="temp") {
+            tempFahrenheitFlag = true;
+        };
     } 
 
     return temperatureObject;
 }
 
 function changeTempDisplay () {
-    const temperatureObject = (toggleTemp(locationDisplayTemp.textContent));
+    const temperatureObject = (toggleTemp(parseFloat(locationDisplayTemp.textContent),'temp'));
     console.log(temperatureObject);
     locationDisplayTemp.textContent = temperatureObject.temperature;
     toggleButton.textContent = temperatureObject.buttonMessage;
+
+    const feelsLikeObject = (toggleTemp(parseFloat(locationDisplayFeelsLike.textContent),'feelslike'))
+    locationDisplayFeelsLike.textContent = feelsLikeObject.temperature;
 
 }
 
