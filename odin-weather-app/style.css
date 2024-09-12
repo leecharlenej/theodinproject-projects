@@ -7,7 +7,7 @@ body {
 .app {
     margin-top: 10%;
     padding: 20px;
-    width: 30vw;
+    width: 500px;
     border: 1px solid black;
     border-radius: 5px;
     display: grid;
@@ -15,7 +15,7 @@ body {
     grid-template-columns: auto;
 }
 
-.header, .location-input, .location-results{
+.header, .locationInput, .location-results{
     justify-self: center;
     margin-bottom: 10px;
 }
@@ -42,5 +42,10 @@ body {
     border: 1px solid black;
     border-radius: 5px;
     width: 80%;
+    height: 60%;
     padding: 15px;
+}
+
+.hidden {
+    display: none;
 }
